@@ -5,13 +5,13 @@ accountsdata = "/loudacre/accounts"
    
 # Bonus 1 - key accounts by postal/zip code
 accountsByPCode = sc.textFile(accountsdata) \
-   .map(lambda s: s.split(','))\
-   .keyBy(lambda account: account[8])
+   .map(lambda s: s.split(',')) \
+   .keyBy(lambda account: account[8]) #속성 중 1개를 key로 하는 dictionary로 변경
  
  # Bonus 2 - map account data to lastname,firstname  
-namesByPCode = accountsByPCode\
-   .mapValues(lambda account: account[4] + ',' + account[3]) \
-   .groupByKey()
+namesByPCode = accountsByPCode \
+   .mapValues(lambda account: account[4] + ',' + account[3]) \ #key를 제외하고 value를 가지고 f(n)을 수행
+   .groupByKey() #key가 동일한 값들을 모두 머지
 
 # Bonus 3 - print the first 5 zip codes and list the names 
 for (pcode,names) in namesByPCode.sortByKey().take(5):
