@@ -1,3 +1,10 @@
+# Jupyter Notebook 
+```bash
+vi .bashrc
+#export ... -> export ... 
+#export ... -> export ... 
+```
+
 # Use Pair RDD
 ### reduceByKey
 ```
