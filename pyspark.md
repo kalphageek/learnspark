@@ -36,6 +36,8 @@ for (k,vs) in postrdd.take(10):
    print '---', k
    for (v1,v2) in vs:
       print v1+',',v2
-```     
+```  
 * Iterable -> Actual Value
-> vs -> list(vs)   
+```
+postrdd.map(lambda (k,v): (k, list(v))).take(5)  
+```
