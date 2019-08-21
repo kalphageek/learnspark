@@ -26,8 +26,7 @@ resultrdd = joinrdd.map(lambda(k,(p,c)): (k,c,p[3],p[4]))
 for (a,b,c,d) in resultrdd.take(10):
    print a,b,c,d
 ```
-
-*
+### mapValues
 ```
 postrdd = accountrdd.keyBy(lambda r: r[8]) \
 .mapValues(lambda v: (v[4],v[3])) \
