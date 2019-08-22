@@ -7,8 +7,8 @@
 * ORC is avaliable to transact by 1 row unit
 
 ## VM -> PC 데이터 이동
-VM shutdown > VM 설정에서  PC 'CCA175' folder와 연경 > VM Start
-VM > /mnt/hgfs/CCA175 확인
+* VM shutdown > VM 설정 > Option 탭 > PC 'CCA175' folder와 연결 > VM Start
+* VM > /mnt/hgfs/CCA175 확인
 
 ## Databricks Community Edition
 * notbook에서 폴더아래 삭제
@@ -96,3 +96,29 @@ accountdf.printSchema()
 
 accountrdd = accountdf.where("zipcode = 94913").rdd
 accountrdd.saveAsTextFile("/loudacre/accounts_tsv94913")
+
+spark.read.parquet('python/test_support/sql/parquet_partitioned')
+spark.read.text('python/test_support/sql/text-test.txt')
+spark.read.text('python/test_support/sql/text-test.txt', wholetext=True)
+spark.read.orc('python/test_support/sql/orc_partitioned')
+spark.read.csv('python/test_support/sql/ages.csv')
+spark.read.json('python/test_support/sql/people.json')
+spark.read.json(rdd)
+
+s = spark.read.schema("col0 INT, col1 DOUBLE")
+
+spark.read.schema("col0 INT, col1 DOUBLE")
+
+df.createOrReplaceTempView('tmpTable')
+
+df.write.format('parquet')  
+...     .bucketBy(100, 'year', 'month')
+...     .mode("overwrite")
+...     .saveAsTable('bucketed_table')
+df.write.format('parquet')  
+...     .bucketBy(100, 'year', 'month')
+...     .sortBy('day')
+...     .mode("overwrite")
+...     .saveAsTable('sorted_bucketed_table')
+df.write.parquet(os.path.join(tempfile.mkdtemp(), 'data'))
+df.write.mode('append').parquet(os.path.join(tempfile.mkdtemp(), 'data'))
