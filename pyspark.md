@@ -1,6 +1,16 @@
-ORC is avaliable to transact by 1 row unit
+## 시험 참고 URL
+* https://www.cloudera.com/about/training/certification/cca-spark.html
+* https://community.cloud.databricks.com/?o=5888369366172583
+* https://hub.docker.com/u/jupyter
 
-# VM에서 Jupyter Notebook 활성화d
+## 기타정보
+* ORC is avaliable to transact by 1 row unit
+
+## Databricks Community Edition
+* notbook에서 폴더아래 삭제
+> dbutils.fs.rm("", True)
+
+## VM에서 Jupyter Notebook 활성화d
 ```bash
 vi .bashrc
 #export ... -> export ... 
@@ -66,3 +76,19 @@ data = spark.read.format(file_type) \
 .option("delim", delimiter) \
 .load(file_type)
 ```
+
+parquet-tools head datafile.parquet
+parquet-tools schema datafile.parquet
+
+### CSV Schema 설정
+accounts_schema = StructType([
+  StructField(,)
+  StructField(,)
+[)
+
+### Hive -> hdfs 
+ccountdf = sqlContext.read.table('accounts')
+accountdf.printSchema()
+
+accountrdd = accountdf.where("zipcode = 94913").rdd
+accountrdd.saveAsTextFile("/loudacre/accounts_tsv94913")
