@@ -11,8 +11,14 @@
 * VM > /mnt/hgfs/CCA175 확인
 
 ## Databricks Community Edition
-* notbook에서 폴더아래 삭제
-> dbutils.fs.rm("", True)
+* Notebook 에서 사용가능
+```
+%fs
+system command
+%sql
+hive sql
+~~~l
+```
 
 ## VM에서 Jupyter Notebook 활성화d
 ```bash
@@ -88,37 +94,46 @@ parquet-tools schema datafile.parquet
 accounts_schema = StructType([
   StructField(,)
   StructField(,)
-[)
+])
 
 ### Hive -> hdfs 
-ccountdf = sqlContext.read.table('accounts')
-accountdf.printSchema()
-
+```
+accountdf = sqlContext.read.table('accounts')
 accountrdd = accountdf.where("zipcode = 94913").rdd
 accountrdd.saveAsTextFile("/loudacre/accounts_tsv94913")
+```
 
+### spark.read 
+```
 spark.read.parquet('python/test_support/sql/parquet_partitioned')
 spark.read.text('python/test_support/sql/text-test.txt')
-spark.read.text('python/test_support/sql/text-test.txt', wholetext=True)
 spark.read.orc('python/test_support/sql/orc_partitioned')
 spark.read.csv('python/test_support/sql/ages.csv')
 spark.read.json('python/test_support/sql/people.json')
+```
+* read option
+```
+spark.read.text('python/test_support/sql/text-test.txt', wholetext=True)
 spark.read.json(rdd)
-
-s = spark.read.schema("col0 INT, col1 DOUBLE")
-
 spark.read.schema("col0 INT, col1 DOUBLE")
-
 df.createOrReplaceTempView('tmpTable')
-
-df.write.format('parquet')  
-...     .bucketBy(100, 'year', 'month')
-...     .mode("overwrite")
-...     .saveAsTable('bucketed_table')
-df.write.format('parquet')  
-...     .bucketBy(100, 'year', 'month')
-...     .sortBy('day')
-...     .mode("overwrite")
-...     .saveAsTable('sorted_bucketed_table')
+```
+### spark.write
+```
+df.write.csv(os.path.join(tempfile.mkdtemp(), 'data'))
+df.write.json(os.path.join(tempfile.mkdtemp(), 'data'))
+df.write.orc(os.path.join(tempfile.mkdtemp(), 'data'))
 df.write.parquet(os.path.join(tempfile.mkdtemp(), 'data'))
-df.write.mode('append').parquet(os.path.join(tempfile.mkdtemp(), 'data'))
+```
+* write option
+```
+df.write \
+.partitionBy('year', 'month') \
+.mode('append') \
+.parquet(os.path.join(tempfile.mkdtemp(), 'data'))
+
+df.write.format('parquet') \
+.bucketBy(100, 'year', 'month') \
+.mode("overwrite") \
+.saveAsTable('bucketed_table')
+```
