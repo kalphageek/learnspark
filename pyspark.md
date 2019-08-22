@@ -6,6 +6,10 @@
 ## 기타정보
 * ORC is avaliable to transact by 1 row unit
 
+## VM -> PC 데이터 이동
+VM shutdown > VM 설정에서  PC 'CCA175' folder와 연경 > VM Start
+VM > /mnt/hgfs/CCA175 확인
+
 ## Databricks Community Edition
 * notbook에서 폴더아래 삭제
 > dbutils.fs.rm("", True)
