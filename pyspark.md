@@ -1,4 +1,6 @@
-# VM에서 Jupyter Notebook 활성화
+ORC is avaliable to transact by 1 row unit
+
+# VM에서 Jupyter Notebook 활성화d
 ```bash
 vi .bashrc
 #export ... -> export ... 
@@ -50,6 +52,7 @@ postrdd.map(lambda (k,v): (k, list(v))).take(5)
 ```
 
 # Spark 2.3
+```
 file_location = "/..."
 file_type = "csv"
 
@@ -62,3 +65,4 @@ data = spark.read.format(file_type) \
 .option("firstRwIsHeader", first_row_is_header) \
 .option("delim", delimiter) \
 .load(file_type)
+```
