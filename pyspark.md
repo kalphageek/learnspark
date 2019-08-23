@@ -1,5 +1,5 @@
 ## 시험 참고 URL
-* https://www.cloudera.com/about/training/certification/cca-spark.html
+* https://www.cloudera.com/about/training/certification/cca-spark.html  : sqoop 1.4, spark 2.3 검색
 * https://community.cloud.databricks.com/?o=5888369366172583
 * https://hub.docker.com/u/jupyter
 * http://generatedata.com/
