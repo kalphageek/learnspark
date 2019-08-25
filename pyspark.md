@@ -138,3 +138,44 @@ df.write.format('parquet') \
 .mode("overwrite") \
 .saveAsTable('bucketed_table')
 ```
+
+## Hive Timestamp / Date
+```
+hive> select current_timestamp();
+OK
+2017-10-01 00:54:14.736
+
+hive> select current_date();
+OK
+2017-10-01
+
+Add 1 day to current date using HiveQL
+hive> select date_add(current_date(), 1);
+OK
+2017-10-02
+
+Subtract 1 day from current date using HiveQL
+hive> select date_sub(current_date(),1);
+OK
+2017-09-30
+
+Get first day of the given timstamp using HiveQL
+hive> select trunc(current_timestamp(), 'MONTH');
+OK
+2017-10-01
+
+Convert timestamp to date format using HiveQL
+hive> select to_date(current_timestamp());
+OK
+2017-10-01
+
+Data type conversion using Cast function in HiveQL
+hive> select cast(current_timestamp() as date);
+OK
+2017-10-01
+
+Convert Timestamp to YYYYMMDD format using HiveQL
+hive> select from_unixtime(unix_timestamp(current_date()), 'yyyyMMdd');
+OK
+20170001
+```
