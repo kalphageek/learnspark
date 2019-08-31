@@ -74,23 +74,16 @@ postrdd.map(lambda (k,v): (k, list(v))).take(5)
 
 # Spark 2.3
 ```
-file_location = "/..."
-file_type = "csv"
-
-infer_schema = "true"
-first_row_is_header = "true"
-delimiter = ","
-
-data = spark.read.format(file_type) \
+data = spark.read.format("csv") \
 .option("inferSchema", infer_schema) \
-.option("firstRwIsHeader", first_row_is_header) \
-.option("delim", delimiter) \
-.load(file_type)
+.option("header", "true") \
+.option("sep", "\t") \
+.load("/loudacre/accounts)
 ```
-
+```
 parquet-tools head datafile.parquet
 parquet-tools schema datafile.parquet
-
+```
 ### CSV Schema 설정
 accounts_schema = StructType([
   StructField(,)
