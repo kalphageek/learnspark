@@ -97,47 +97,34 @@ accounts_schema = StructType([
   StructField(,)
 ])
 
-### Hive -> hdfs 
+### sqoop -> hive table 
 ```
-accountdf = sqlContext.read.table('accounts')
-accountrdd = accountdf.where("zipcode = 94913").rdd
-accountrdd.saveAsTextFile("/loudacre/accounts_tsv94913")
-```
+sqoop import \
+--connect jdbc:mysql://gateway/loudacre \
+--username training --password training \
+--table accounts \
+--columns "acct_num, first_name, last_name" \
+--target-dir "/user/hive/warehouse/loudacre.db/acct/" --delete-target-dir \
+--as-avrodatafile \
+-m1
 
-### spark.read 
-```
-spark.read.parquet('python/test_support/sql/parquet_partitioned')
-spark.read.text('python/test_support/sql/text-test.txt')
-spark.read.orc('python/test_support/sql/orc_partitioned')
-spark.read.csv('python/test_support/sql/ages.csv')
-spark.read.json('python/test_support/sql/people.json')
-```
-* read option
-```
-spark.read.text('python/test_support/sql/text-test.txt', wholetext=True)
-spark.read.json(rdd)
-spark.read.schema("col0 INT, col1 DOUBLE")
-df.createOrReplaceTempView('tmpTable')
-```
-### spark.write
-```
-df.write.csv(os.path.join(tempfile.mkdtemp(), 'data'))
-df.write.json(os.path.join(tempfile.mkdtemp(), 'data'))
-df.write.orc(os.path.join(tempfile.mkdtemp(), 'data'))
-df.write.parquet(os.path.join(tempfile.mkdtemp(), 'data'))
-```
-* write option
-```
-df.write \
-.partitionBy('year', 'month') \
-.mode('append') \
-.parquet(os.path.join(tempfile.mkdtemp(), 'data'))
+/user/hive/warehouse/loudacre.db/acct/
 
-df.write.format('parquet') \
-.bucketBy(100, 'year', 'month') \
-.mode("overwrite") \
-.saveAsTable('bucketed_table')
-```
+CREATE external TABLE loudacre.acct
+  COMMENT "just drop the schema right into the HQL"
+  ROW FORMAT SERDE
+  'org.apache.hadoop.hive.serde2.avro.AvroSerDe'
+  STORED AS INPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat'
+  OUTPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat'
+  TBLPROPERTIES (
+    'avro.schema.literal'='{
+      "namespace": "com.howdy",
+      "name": "some_schema",
+      "type": "record",
+      "fields": [ { "name":"acct_num","type":"int"}, { "name":"first_name","type":"string"}, { "name":"last_name","type":"string"}]
+    }');
 
 ## Hive Timestamp / Date
 ```
