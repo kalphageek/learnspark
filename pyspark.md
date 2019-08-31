@@ -119,6 +119,10 @@ CREATE external TABLE loudacre.acct
       "fields": [ { "name":"acct_num","type":"int"}, { "name":"first_name","type":"string"}, { "name":"last_name","type":"string"}]
     }');
 ```
+## Hive function
+```
+select split("aa/bb", '[ |//.]')[0] as aa
+```
 ## Hive Timestamp / Date
 ```
 hive> select current_timestamp();
