@@ -121,7 +121,13 @@ CREATE external TABLE loudacre.acct
 ```
 ## Hive function
 ```
-select split("aa/bb", '[ |//.]')[0] as aa
+select id, item, dt
+from (
+  select 1 as id, 
+    split("cc kk.aa/bb", '[ |//.]') as items, 
+    from_unixtime(unix_timestamp(current_timestamp),'MM/dd') as dt
+)
+lateral view explode(items) tbl as item
 ```
 ## Hive Timestamp / Date
 ```
