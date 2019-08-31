@@ -118,7 +118,7 @@ CREATE external TABLE loudacre.acct
       "type": "record",
       "fields": [ { "name":"acct_num","type":"int"}, { "name":"first_name","type":"string"}, { "name":"last_name","type":"string"}]
     }');
-
+```
 ## Hive Timestamp / Date
 ```
 hive> select current_timestamp();
