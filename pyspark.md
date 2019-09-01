@@ -121,11 +121,14 @@ CREATE external TABLE loudacre.acct
 ```
 ## Hive function
 ```
-select id, item, dt
+select id, item, dt, domain1, domain2, cal, trans
 from (
   select 1 as id, 
+    substr('abc@naver.com', instr('abc@naver.com', '@')+1) as domain1, substr('abc@naver.com', locate('@', 'abc@naver.com', 2)+1) as domain2,
     split("cc kk.aa/bb", '[ |//.]') as items, 
-    from_unixtime(unix_timestamp(current_timestamp),'MM/dd') as dt
+    from_unixtime(unix_timestamp(current_timestamp),'MM/dd') as dt,
+    cast('100' as int) + cast(100.1 as float) as cal,
+    translate('Make sure u knew that code','e','o') as trans
 )
 lateral view explode(items) tbl as item
 ```
