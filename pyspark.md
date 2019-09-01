@@ -99,6 +99,7 @@ sqoop import \
 --columns "acct_num, first_name, last_name" \
 --target-dir "/user/hive/warehouse/loudacre.db/acct/" --delete-target-dir \
 --as-avrodatafile \
+--compression-codec org.apache.hadoop.io.compress.SnappyCodec \ #default gzip
 -m1
 
 /user/hive/warehouse/loudacre.db/acct/
