@@ -173,3 +173,44 @@ hive> select from_unixtime(unix_timestamp(current_date()), 'yyyyMMdd');
 OK
 20170001
 ```
+# Sqoop vs. Spark Dataframe
+## compress by snappy
+Sqoop
+--compression-codec org.apache.hadoop.io.compress.SnappyCodec #default gzip
+Pyspark2
+.option("compression","snappy") #default gzip
+
+## mapper count
+Sqoop
+-m1
+Pyspark2
+.repartition(1)
+
+## write file location
+Sqoop
+--target-dir "/loudacre/accounts_csv"
+Pyspark2
+.save("/loudacre/accounts_csv")
+
+## read file location
+Sqoop
+--export-dir "/loudacre/accounts.csv"
+Pyspark2
+.load("/loudacre/accounts.csv")
+
+## fields delimiter
+Sqoop
+--fields-terminated-by ","
+Pyspark2
+.option("sep",",")
+
+## avro file format
+Sqoop
+--as-avrodatafile
+Pyspark2
+.format("com.databricks.spark.avro")
+
+Sqoop
+--delete-target-dir
+Pyspark2
+.mode("overwrite")
