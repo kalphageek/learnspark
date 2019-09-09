@@ -7,5 +7,11 @@ $ cd $DEVSH/exercises/spark-application/
 $ spark-submit --master yarn-client --name 'Count JPGs' CountJPGs.py /loudacre/weblogs/*
 # or
 $ spark-submit --properties-file myspark.conf \ CountJPGs.py /loudacre/weblogs/*
+
+$vi myspark.conf
+spark.app.name  JJD App 2
+spark.master    yarn-client
+spark.executor.memory   400m
 ```
+
 
