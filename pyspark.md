@@ -132,6 +132,13 @@ from (
     translate('Make sure u knew that code','e','o') as trans
 )
 lateral view explode(items) tbl as item
+
+--Json Parsing
+select item, key, value
+from (
+SELECT 'aa' as item, str_to_map(replace(replace(replace(replace('{ "name": "json", "class": "math", "age": 15 }', '{',''),'}',''),'"', ''), ' ',''),',',':') as v
+)
+lateral view explode(v) tbl as key, value 
 ```
 ## Hive Timestamp / Date
 ```
